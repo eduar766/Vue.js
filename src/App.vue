@@ -3,10 +3,11 @@
     img(src='./assets/logo.png')
     h1 PlatziMusic
     ul
-      li(v-for="artist in artists") {{ artist.name }}
+      artist(v-for="artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid")
 </template>
 
 <script>
+import Artist from './components/Artist.vue'
 import getArtists from './api'
 
 export default {
@@ -16,17 +17,20 @@ export default {
       artists: []
     }
   },
-  mounted: function(){
+  components: {
+    Artist
+  },
+  mounted: function () {
     const self = this
     getArtists()
-      .then(function(artists){
+      .then(function (artists) {
         self.artists = artists
       })
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 #app
 	font-family 'Avenir', Helvetica, Arial, sans-serif
 	-webkit-font-smoothing antialiased
